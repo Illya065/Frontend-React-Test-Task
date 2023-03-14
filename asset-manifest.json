@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Frontend-React-Test-Task/static/css/main.94731727.css",
+    "main.js": "/Frontend-React-Test-Task/static/js/main.3c55daea.js",
+    "index.html": "/Frontend-React-Test-Task/index.html",
+    "main.94731727.css.map": "/Frontend-React-Test-Task/static/css/main.94731727.css.map",
+    "main.3c55daea.js.map": "/Frontend-React-Test-Task/static/js/main.3c55daea.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.94731727.css",
+    "static/js/main.3c55daea.js"
+  ]
+}
