@@ -1,0 +1,24 @@
+.tableWrapper {
+  max-width: 100%;
+  overflow: scroll;
+  height: 80vh;
+  margin-bottom: 3rem;
+}
+
+.matrixTable {
+  min-width: 100%;
+}
+
+.matrixTable,
+.matrixTable th,
+.matrixTable tr,
+.matrixTable td {
+  border-collapse: collapse;
+  border: 2px solid #adadad;
+}
+
+.matrixTable td,
+.matrixTable th {
+  padding: 0.5rem;
+}
+

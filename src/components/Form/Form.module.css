@@ -1,0 +1,57 @@
+.form {
+  padding-top: 2rem;
+  margin-bottom: 3rem;
+}
+
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.inputWrapper:nth-child(4) {
+  margin-bottom: 3rem;
+}
+
+.inputWrapper label {
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.inputWrapper input {
+  max-width: 300px;
+  border: 2px solid #000;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+}
+
+.matrixFieldset {
+    margin-bottom: 2rem;
+}
+
+.form fieldset {
+  border: 2px solid #000;
+}
+
+.form legend {
+  font-size: 1.5rem;
+}
+
+.form button {
+  border: 2px solid #000;
+  background: #000;
+  color: #fff;
+  font-weight: 700;
+  margin: 0 auto;
+  display: block;
+  transition: all 0.3;
+  padding: 1rem 2rem;
+  cursor: pointer;
+}
+
+.form button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
