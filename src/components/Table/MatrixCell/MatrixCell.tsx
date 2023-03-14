@@ -44,9 +44,10 @@ const MatrixCell = ({
 
   return (
     <td
-      className={`cell ${isHighlighted ? classes.highlighted : ""}`}
+      className={`${isHighlighted ? classes.highlighted : ""}`}
       data-row={rowIndex}
       data-column={cellIndex}
+      data-type={"cell"}
       style={style}
     >
       {cellTextContent}

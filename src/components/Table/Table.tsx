@@ -1,115 +1,52 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import {
   CellsContext,
   SubmitedMatrixSizeContext,
   UserInputContext,
 } from "../../provider";
-import { Cell } from "../../types/global/cells";
+import { useTable } from "../../talons/Table/useTable";
 import MatrixColumnAverage from "./MatrixColumnAverage";
 import MatrixHeaderRow from "./MatrixHeaderRow";
 import MaxtrixCellItems from "./MaxtrixCellItems";
 import classes from "./Table.module.css";
 
 const Table = (): JSX.Element => {
-  const { cells, setCells } = useContext(CellsContext) || {};
-  const { userInputs } = useContext(UserInputContext) || {};
-  const { submitedMatrixSize, setSubmitedMatrixSize } =
-    useContext(SubmitedMatrixSizeContext) || {};
+  // Use Context API to retrieve data from the provider
+  const cellsContext = useContext(CellsContext);
+  const userInputsContext = useContext(UserInputContext);
+  const submitedMatrixSizeContext = useContext(SubmitedMatrixSizeContext);
 
-  const [highlightedCells, setHighlightedCells] = useState<Cell[] | null>([]);
-  const [hoveredRow, setHoveredRow] = useState(-1);
+  // Call the custom hook to get the data for the table
+  const talonProps = useTable({
+    cellsContext,
+    userInputsContext,
+    submitedMatrixSizeContext,
+  });
 
-  if (
-    !cells ||
-    !submitedMatrixSize ||
-    !setCells ||
-    !userInputs ||
-    !setSubmitedMatrixSize
-  ) {
-    return <h2>Please Generate Matrix</h2>;
+  // Check if there is an error with the custom hook data
+  const { error } = talonProps;
+
+  // Return an error message if there is an error
+  if (error) {
+    return <h1>Please provide contexts</h1>;
   }
 
-  const { X: highlightedCellsQty } = userInputs;
-  const { rows, columns } = submitedMatrixSize;
+  // Get the table data from the custom hook
+  const {
+    cells,
+    handleTableClick,
+    handleTableMouseOut,
+    handleTableMouseOver,
+    columns,
+    rows,
+    hoveredRow,
+    highlightedCells,
+  } = talonProps;
 
-  const handleTableClick = (event: React.MouseEvent<HTMLTableElement>) => {
-    const target = event.target as HTMLElement;
-    if (target.className.includes("cell")) {
-      const row = parseInt(target.getAttribute("data-row") || "0");
-      const column = parseInt(target.getAttribute("data-column") || "0");
-
-      handleCellUpdate(row, column);
-      return;
-    }
-
-    if (target.className.includes("delete")) {
-      const row = parseInt(target.getAttribute("data-row") || "0");
-      handleRemoveRow(row);
-    }
-  };
-
-  const handleCellUpdate = (row: number, column: number) => {
-    const cellsCopy = JSON.parse(JSON.stringify(cells));
-    const clickedCell = cells[row][column];
-    cellsCopy[row][column] = {
-      id: clickedCell.id,
-      amount: clickedCell.amount + 1,
-    };
-    setCells(cellsCopy);
-  };
-
-  const handleTableMouseOver = (event: React.MouseEvent<HTMLTableElement>) => {
-    const target = event.target as HTMLElement;
-    if (target.className.includes("cell")) {
-      const row = parseInt(target.getAttribute("data-row") || "0");
-      const column = parseInt(target.getAttribute("data-column") || "0");
-
-      setHighlightedCells(
-        findNearestCells(cells[row][column], cells, Number(highlightedCellsQty))
-      );
-      setHoveredRow(-1);
-      return;
-    }
-
-    if (target.className.includes("sum")) {
-      const row = parseInt(target.getAttribute("data-row") || "0");
-      setHoveredRow(row);
-      setHighlightedCells(null);
-      return;
-    }
-  };
-
-  const handleTableMouseOut = () => {
-    setHighlightedCells(null);
-    setHoveredRow(-1);
-  };
-
-  const findNearestCells = (
-    targetCell: Cell,
-    cells: Cell[][],
-    count: number
-  ) => {
-    if (!count) {
-      return null;
-    }
-    const cellsCopy = cells.flat();
-    cellsCopy.sort(
-      (a, b) =>
-        Math.abs(targetCell.amount - a.amount) -
-        Math.abs(targetCell.amount - b.amount)
-    );
-    return cellsCopy.slice(0, count);
-  };
-
-  const handleRemoveRow = (rowIndex: number) => {
-    const newCells = JSON.parse(JSON.stringify(cells));
-    newCells.splice(rowIndex, 1);
-    setCells(newCells);
-    setSubmitedMatrixSize((prevValue) => ({
-      ...prevValue,
-      rows: prevValue.rows - 1,
-    }));
-  };
+  // Check if there are no cells in the table yet
+  if (!cells) {
+    return <h2>Please Generate Matrix</h2>;
+  }
 
   return (
     <div className={classes.tableWrapper}>
@@ -121,14 +58,17 @@ const Table = (): JSX.Element => {
         className={classes.matrixTable}
       >
         <tbody>
+          {/* Render the table header row */}
           <MatrixHeaderRow columns={columns} />
 
+          {/* Render the table cells */}
           <MaxtrixCellItems
             cells={cells}
             hoveredRow={hoveredRow}
             highlightedCells={highlightedCells}
           />
 
+          {/* Render the average of each column */}
           <MatrixColumnAverage columns={columns} rows={rows} cells={cells} />
         </tbody>
       </table>

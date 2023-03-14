@@ -99,7 +99,7 @@ export const useForm = ({
     if (!cells) {
       return;
     }
-    const newCells = JSON.parse(JSON.stringify(cells));
+    const newCells = [...cells];
 
     newCells.push(
       [...Array(columns)].map(() => ({
