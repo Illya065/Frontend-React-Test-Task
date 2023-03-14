@@ -74,7 +74,7 @@ const Form = (): JSX.Element => {
       <fieldset>
         <legend>Add Row</legend>
         <p>
-          <button disabled={!cells} type="button" onClick={handleAddRow}>
+          <button disabled={!cells} type="button" onPointerDown={handleAddRow}>
             Add Row
           </button>
         </p>

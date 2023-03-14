@@ -49,7 +49,7 @@ const Table = (): JSX.Element => {
   };
 
   const handleCellUpdate = (row: number, column: number) => {
-    const cellsCopy = structuredClone(cells);
+    const cellsCopy = JSON.parse(JSON.stringify(cells));
     const clickedCell = cells[row][column];
     cellsCopy[row][column] = {
       id: clickedCell.id,
@@ -102,7 +102,7 @@ const Table = (): JSX.Element => {
   };
 
   const handleRemoveRow = (rowIndex: number) => {
-    const newCells = structuredClone(cells);
+    const newCells = JSON.parse(JSON.stringify(cells));
     newCells.splice(rowIndex, 1);
     setCells(newCells);
     setSubmitedMatrixSize((prevValue) => ({

@@ -99,7 +99,8 @@ export const useForm = ({
     if (!cells) {
       return;
     }
-    const newCells = structuredClone(cells);
+    const newCells = JSON.parse(JSON.stringify(cells));
+
     newCells.push(
       [...Array(columns)].map(() => ({
         id: Date.now() + Math.random() * 10,
