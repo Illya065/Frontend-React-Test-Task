@@ -102,8 +102,8 @@ export const useForm = ({
     const newCells = [...cells];
 
     newCells.push(
-      [...Array(columns)].map(() => ({
-        id: Date.now() + Math.random() * 10,
+      [...Array(columns)].map((_, index) => ({
+        id: index,
         amount: Math.floor(Math.random() * 900) + 100,
       }))
     );
