@@ -36,7 +36,7 @@ export const useForm = ({
   const { M: rows, N: columns } = userInputs;
 
   // Calculate the minimum and maximum accessible cells
-  const maxAccessibleCells = Number(rows) * Number(columns);
+  const maxAccessibleCells = Number(rows) * Number(columns) - 1;
   const minAccessibleCells = 0;
 
   // Handle the change event of the input fields

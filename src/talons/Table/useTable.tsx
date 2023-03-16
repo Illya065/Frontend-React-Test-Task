@@ -136,7 +136,7 @@ export const useTable = ({
         Math.abs(targetCell.amount - a.amount) -
         Math.abs(targetCell.amount - b.amount)
     );
-    return cellsCopy.slice(0, count);
+    return cellsCopy.slice(0, count + 1);
   };
 
   //Removes a row from the matrix and updates the submitedMatrixSize state
